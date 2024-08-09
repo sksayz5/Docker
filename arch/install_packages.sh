@@ -12,6 +12,9 @@ printf "\n[archlinuxcn]\n%s\n" 'Server = https://repo.archlinuxcn.org/$arch' >> 
 # Generate pacman keys
 pacman-key --init
 
+# Sign archlinuxcn keys
+pacman-key --lsign-key "farseerfc@archlinux.org"
+
 # Install archlinuxcn keys
 pacman -Sy --noconfirm archlinuxcn-keyring
 
@@ -27,7 +30,7 @@ pacman -Sy --needed --noconfirm \
 	libelf base-devel openssh lz4 jq go ncurses \
 	bison flex ninja uboot-tools z3 glibc dpkg \
 	multilib-devel bc htop python-setuptools   \
-	util-linux man-pages zsh dbus neovim
+	util-linux man-pages zsh dbus neovim python-pipx
 
 # More Packages
 pacman -Sy --needed --noconfirm \
@@ -42,6 +45,10 @@ yes | pacman -S archlinuxcn/unzip
 # archlinuxcn packages
 pacman -S --needed --noconfirm \
     python2 yay
+
+# Use pipx instead of pip
+ln -sf /usr/bin/pipx /usr/local/bin/pip
+ln -sf /usr/bin/pipx /usr/local/bin/pip3
 
 # python and pip version
 python --version; pip --version
